@@ -15,11 +15,12 @@ public class Tower : MonoBehaviour
         m_Collider = GetComponent<Collider>();
         m_Mask = LayerMask.GetMask("Ground Creeps");
     }
-    
+
     void FixedUpdate()
     {
         var bounds = m_Collider.bounds;
-        m_Targets = Physics.OverlapCapsule(bounds.max, bounds.min, range, m_Mask);
-        Debug.Log(m_Targets.Length);
+        var top = new Vector3(transform.position.x, bounds.max.y, transform.position.z);
+        var bottom = new Vector3(transform.position.x, bounds.min.y, transform.position.z);
+        m_Targets = Physics.OverlapCapsule(top, bottom, range, m_Mask);
     }
 }

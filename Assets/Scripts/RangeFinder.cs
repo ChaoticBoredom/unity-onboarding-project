@@ -12,7 +12,7 @@ public class RangeFinder : MonoBehaviour
         m_Tower = gameObject.GetComponentInParent<Tower>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         var scale = m_Tower.range * 2;
         transform.localScale = new Vector3(scale, scale);

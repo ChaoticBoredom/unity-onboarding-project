@@ -7,12 +7,14 @@ public class Tower : MonoBehaviour
 
     public float range;
     public float fireRate;
+    public float damage;
     public GameObject projectilePrefab;
     
     private Collider[] m_Targets;
     private Collider m_Collider;
     private LayerMask m_Mask;
     private bool m_Attacking;
+    private GameObject m_Target;
 
     void Start()
     {
@@ -31,9 +33,12 @@ public class Tower : MonoBehaviour
             StartCoroutine(Attack());
     }
 
-    GameObject ChooseTarget()
+    void ChooseTarget()
     {
-        return m_Targets[Random.Range(0, m_Targets.Length)].gameObject;
+        if (m_Target != null)
+            return;
+        
+        m_Target = m_Targets[Random.Range(0, m_Targets.Length)].gameObject;
     }
 
     IEnumerator Attack()
@@ -45,9 +50,12 @@ public class Tower : MonoBehaviour
         }
 
         m_Attacking = true;
-        var target = ChooseTarget();
+        ChooseTarget();
         var projectile = Instantiate(projectilePrefab);
-        projectile.GetComponent<Projectile>().target = target;
+        var projectileScript = projectile.GetComponent<Projectile>();
+        projectileScript.target = m_Target;
+        projectileScript.damage = damage;
+        
         
         yield return new WaitForSeconds(fireRate);
 

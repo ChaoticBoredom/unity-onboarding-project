@@ -31,4 +31,14 @@ public class Creep : MonoBehaviour
             Destroy(gameObject);
         } 
     }
+
+    public void Hit(float incomingDamage)
+    {
+        m_CurrentHitPoints -= incomingDamage;
+
+        if (m_CurrentHitPoints <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 }

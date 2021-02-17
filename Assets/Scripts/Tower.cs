@@ -15,19 +15,21 @@ public class Tower : MonoBehaviour
     private LayerMask m_Mask;
     private bool m_Attacking;
     private GameObject m_Target;
+    private Vector3 m_TowerTop;
+    private Vector3 m_TowerBottom;
 
     void Start()
     {
         m_Collider = GetComponent<Collider>();
         m_Mask = LayerMask.GetMask("Ground Creeps");
+        var bounds = m_Collider.bounds;
+        m_TowerTop = new Vector3(transform.position.x, bounds.max.y, transform.position.z);
+        m_TowerBottom = new Vector3(transform.position.x, bounds.min.y, transform.position.z);
     }
 
     void FixedUpdate()
     {
-        var bounds = m_Collider.bounds;
-        var top = new Vector3(transform.position.x, bounds.max.y, transform.position.z);
-        var bottom = new Vector3(transform.position.x, bounds.min.y, transform.position.z);
-        m_Targets = Physics.OverlapCapsule(top, bottom, range, m_Mask);
+        m_Targets = Physics.OverlapCapsule(m_TowerTop, m_TowerBottom, range, m_Mask);
 
         if (!m_Attacking && m_Targets.Length > 0)
             StartCoroutine(Attack());
@@ -51,7 +53,7 @@ public class Tower : MonoBehaviour
 
         m_Attacking = true;
         ChooseTarget();
-        var projectile = Instantiate(projectilePrefab);
+        var projectile = Instantiate(projectilePrefab, m_TowerTop, Quaternion.identity);
         var projectileScript = projectile.GetComponent<Projectile>();
         projectileScript.target = m_Target;
         projectileScript.damage = damage;

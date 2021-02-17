@@ -25,7 +25,6 @@ public class Projectile : MonoBehaviour
         }
 
         Vector3 targetLocation = target.transform.position;
-        float distance = Vector3.Distance(transform.position, targetLocation);
         var stepPosition = Vector3.MoveTowards(transform.position, targetLocation, speed * Time.fixedDeltaTime);
         m_Rigidbody.MovePosition(stepPosition);
     }

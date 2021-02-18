@@ -24,6 +24,7 @@ public class TowerBuilder : MonoBehaviour
         var pos = Input.mousePosition;
         var location = m_MainCamera.ScreenToWorldPoint(new Vector3(pos.x, pos.y, 10));
         m_Rigidbody.MovePosition(location);
+        
         if (Input.GetMouseButton(0))
         {
             StartCoroutine(DropTower());

@@ -31,6 +31,12 @@ public class Tower : MonoBehaviour
     {
         m_Targets = Physics.OverlapCapsule(m_TowerTop, m_TowerBottom, range, m_Mask);
 
+        if (m_Target)
+        {
+            if (Vector3.Distance(transform.position, m_Target.transform.position) > range)
+                m_Target = null;
+        }
+
         if (!m_Attacking && m_Targets.Length > 0)
             StartCoroutine(Attack());
     }
@@ -40,6 +46,7 @@ public class Tower : MonoBehaviour
         if (m_Target != null)
             return;
         
+        m_Targets = Physics.OverlapCapsule(m_TowerTop, m_TowerBottom, range, m_Mask);
         m_Target = m_Targets[Random.Range(0, m_Targets.Length)].gameObject;
     }
 

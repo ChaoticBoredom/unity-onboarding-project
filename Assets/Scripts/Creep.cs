@@ -21,14 +21,16 @@ public class Creep : MonoBehaviour
     {
         Vector3 goalLocation = goal.transform.position;
         float distance = Vector3.Distance(transform.position, goalLocation);
-        if (distance > 0.5f)
+        if (distance > 0.2f)
         {
             var stepPosition = Vector3.MoveTowards(transform.position, goalLocation, speed * Time.fixedDeltaTime);
             m_Rigidbody.MovePosition(stepPosition);
         }
         else
         {
-            Destroy(gameObject);
+            goal = GetNextPoint();
+            if (goal == null)
+                Destroy(gameObject);
         } 
     }
 
@@ -40,5 +42,13 @@ public class Creep : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    GameObject GetNextPoint()
+    {
+        Waypoint script = goal.GetComponent<Waypoint>();
+        if (script == null)
+            return null;
+        return script.nextPoint;
     }
 }

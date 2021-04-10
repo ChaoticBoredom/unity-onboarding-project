@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MLAPI;
 using UnityEngine;
 
 public class DefenderController : MonoBehaviour
@@ -8,6 +9,6 @@ public class DefenderController : MonoBehaviour
 
     public void BuildTower()
     {
-        Instantiate(towerPrefab);
+        var tower = Instantiate(towerPrefab);
     }
 }

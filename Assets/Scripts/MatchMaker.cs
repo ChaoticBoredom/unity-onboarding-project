@@ -16,6 +16,8 @@ public class MatchMaker : MonoBehaviour
     private Text m_searchingText;
     private Button m_searchButton;
     private bool m_searching;
+    
+    private const string URL_LOCATION = "http://26c3cb6d9270.ngrok.io";
 
     [Serializable]
     private class MatchData
@@ -44,7 +46,7 @@ public class MatchMaker : MonoBehaviour
 
     public void FindMatch()
     {
-        UnityWebRequest webReq = new UnityWebRequest(string.Format("localhost:3000/search/{0}", username));
+        UnityWebRequest webReq = new UnityWebRequest(string.Format(URL_LOCATION + "/search/{0}", username));
         webReq.method = "PUT";
         webReq.SendWebRequest();
         m_searching = true;
@@ -67,7 +69,7 @@ public class MatchMaker : MonoBehaviour
 
     private IEnumerator CheckMatchMaker()
     {
-        UnityWebRequest webReq = new UnityWebRequest(string.Format("localhost:3000/search/{0}", username));
+        UnityWebRequest webReq = new UnityWebRequest(string.Format(URL_LOCATION + "/search/{0}", username));
         webReq.downloadHandler = new DownloadHandlerBuffer();
         yield return webReq.SendWebRequest();
 

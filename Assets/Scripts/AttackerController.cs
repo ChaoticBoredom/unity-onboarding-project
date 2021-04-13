@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MLAPI;
 
 public class AttackerController : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class AttackerController : MonoBehaviour
     private GameObject m_SpawnPoint;
     private Spawner m_Spawner;
 
-    void Start()
+    public void Start()
     {
         m_SpawnPoint = GameObject.FindWithTag("Respawn");
         m_Spawner = m_SpawnPoint.GetComponent<Spawner>();
@@ -22,7 +23,6 @@ public class AttackerController : MonoBehaviour
 
     public void TriggerSpawn()
     {
-        m_Spawner.SpawnCreeps(spawnCount);
-        
+        m_Spawner.SpawnCreepsServerRpc(spawnCount);
     }
 }

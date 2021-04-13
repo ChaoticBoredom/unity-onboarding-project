@@ -1,22 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using MLAPI;
+using MLAPI.Messaging;
 using UnityEngine;
 
-public class Spawner : Waypoint 
+public class Spawner : NetworkBehaviour
 {
     public GameObject creep;
     public bool continuousSpawn;
     public float spawnInterval;
+
+    private Waypoint _waypoint;
     
-    void Start()
+    public override void NetworkStart()
     {
+        _waypoint = GetComponent<Waypoint>();
         if (continuousSpawn)
             StartCoroutine(ContinuousSpawn());
     }
 
-    public void SpawnCreeps(int count = 1)
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnCreepsServerRpc(int count = 1)
     {
+        Debug.Log("Spawning Creeps");
         StartCoroutine(SpawnOnDemand(count));
     }
 
@@ -35,7 +41,8 @@ public class Spawner : Waypoint
         position.x = Random.Range(position.x - 0.5f, position.x + 0.5f);
         position.z = Random.Range(position.z - 0.5f, position.z + 0.5f);
         var newCreep = Instantiate(creep, position, Quaternion.identity);
-        newCreep.GetComponent<Creep>().goal = nextPoint;
+        newCreep.GetComponent<Creep>().goal = _waypoint.nextPoint;
+        newCreep.GetComponent<NetworkObject>().Spawn();
     }
     
     IEnumerator ContinuousSpawn()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MLAPI;
 
 public class Creep : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class Creep : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (NetworkManager.Singleton.IsClient) return;
+
         Vector3 goalLocation = goal.transform.position;
         float distance = Vector3.Distance(transform.position, goalLocation);
         if (distance > 0.2f)
@@ -29,8 +32,11 @@ public class Creep : MonoBehaviour
         else
         {
             goal = GetNextPoint();
-            if (goal == null)
+            if (!goal)
+            {
+                GetComponent<NetworkObject>().Despawn();
                 Destroy(gameObject);
+            }
         } 
     }
 
@@ -40,7 +46,7 @@ public class Creep : MonoBehaviour
 
         if (m_CurrentHitPoints <= 0)
         {
-            Destroy(gameObject);
+            GetComponent<NetworkObject>().Despawn();
         }
     }
 

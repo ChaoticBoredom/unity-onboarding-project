@@ -37,7 +37,6 @@ namespace Editor
             string[] scenes = {"Assets/Scenes/SampleScene.unity"};
             options.scenes = scenes;
             options.target = BuildTarget.StandaloneOSX;
-            options.options = BuildOptions.EnableHeadlessMode;
 
             BuildReport report = BuildPipeline.BuildPlayer(scenes, options.locationPathName, options.target, options.options);
 

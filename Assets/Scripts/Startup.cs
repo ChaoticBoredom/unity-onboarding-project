@@ -6,11 +6,12 @@ using MLAPI;
 public class Startup : MonoBehaviour
 {
     public GameObject matchmaker;
+    public GameObject creepPath;
     void Start()
     {
 #if UNITY_SERVER
         NetworkManager.Singleton.StartServer();
-        System.Console.WriteLine(string.Format("Server Started at {0}", NetworkManager.Singleton.ConnectedHostname));
+        Debug.Log("Server Starting");
 #else
         Instantiate(matchmaker);
 #endif

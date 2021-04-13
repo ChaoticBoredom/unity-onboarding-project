@@ -5,10 +5,17 @@ using UnityEngine;
 
 public class DefenderController : MonoBehaviour
 {
-    public GameObject towerPrefab;
+    public GameObject towerTemplate;
+
+    private GameManager m_gameManager;
+
+    void Start()
+    {
+        m_gameManager = FindObjectOfType<GameManager>();
+    }
 
     public void BuildTower()
     {
-        var tower = Instantiate(towerPrefab);
+        towerTemplate.SetActive(true);
     }
 }

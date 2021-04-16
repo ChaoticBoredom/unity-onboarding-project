@@ -47,6 +47,7 @@ public class Creep : MonoBehaviour
         if (m_CurrentHitPoints <= 0)
         {
             GetComponent<NetworkObject>().Despawn();
+            Destroy(gameObject);
         }
     }
 

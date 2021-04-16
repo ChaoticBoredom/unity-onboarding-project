@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MLAPI;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -18,7 +19,9 @@ public class Projectile : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (target == null)
+        if (NetworkManager.Singleton.IsClient) return;
+
+        if (!target)
         {
             Destroy(gameObject);
             return;
@@ -31,6 +34,8 @@ public class Projectile : MonoBehaviour
 
     void OnCollisionEnter(Collision coll)
     {
+        if (NetworkManager.Singleton.IsClient) return;
+
         var creep = coll.gameObject.GetComponent<Creep>();
         creep.Hit(damage);
         Destroy(gameObject);

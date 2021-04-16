@@ -30,6 +30,8 @@ public class Tower : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (NetworkManager.Singleton.IsClient) return;
+
         m_Targets = Physics.OverlapCapsule(m_TowerTop, m_TowerBottom, range, m_Mask);
 
         if (m_Target)
@@ -65,8 +67,8 @@ public class Tower : MonoBehaviour
         var projectileScript = projectile.GetComponent<Projectile>();
         projectileScript.target = m_Target;
         projectileScript.damage = damage;
-        
-        
+        projectile.GetComponent<NetworkObject>().Spawn();
+
         yield return new WaitForSeconds(fireRate);
 
         StartCoroutine(Attack());

@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using MLAPI;
+using MLAPI.Messaging;
+using MLAPI.Transports.UNET;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class MatchMaker : MonoBehaviour
+public class MatchMaker : NetworkBehaviour
 {
     public string username;
     public GameObject defenderController;
@@ -16,8 +18,8 @@ public class MatchMaker : MonoBehaviour
     private Text m_searchingText;
     private Button m_searchButton;
     private bool m_searching;
-    
-    private const string URL_LOCATION = "http://26c3cb6d9270.ngrok.io";
+
+    private const string URL_LOCATION = "https://26c3cb6d9270.ngrok.io";
 
     [Serializable]
     private class MatchData
@@ -64,30 +66,38 @@ public class MatchMaker : MonoBehaviour
         if (!m_searching) return;
         
         int elipses = (int) Mathf.Repeat(Time.fixedTime, 4);
-        m_searchingText.text = "Searching" + new String('.', elipses);
+        m_searchingText.text = "Searching" + new string('.', elipses);
     }
 
     private IEnumerator CheckMatchMaker()
     {
-        UnityWebRequest webReq = new UnityWebRequest(string.Format(URL_LOCATION + "/search/{0}", username));
-        webReq.downloadHandler = new DownloadHandlerBuffer();
+        UnityWebRequest webReq = new UnityWebRequest(string.Format(URL_LOCATION + "/search/{0}", username))
+        {
+            downloadHandler = new DownloadHandlerBuffer()
+        };
         yield return webReq.SendWebRequest();
 
         if (webReq.result == UnityWebRequest.Result.Success)
         {
             MatchData data = JsonUtility.FromJson<MatchData>(webReq.downloadHandler.text);
             m_searching = false;
-            m_searchingText.text = string.Format("Match Found!\n{0}\nvs.\n{1}", data.attacker_username, data.defender_username);
+            m_searchingText.text = $"Match Found!\n{data.attacker_username}\nvs.\n{data.defender_username}";
+            var serverData = data.server.Split(':');
+            NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress = serverData.First();
+            NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectPort = Int32.Parse(serverData.Last());
             NetworkManager.Singleton.StartClient();
             if (data.attacker_username == username)
             {
                 Instantiate(attackerController);
+                //GameManager.Singleton.SetAttackerDataServerRpc(data.attacker_id, data.attacker_username, data.id);
             }
             else
             {
                 Instantiate(defenderController);
+                //GameManager.Singleton.SetDefenderDataServerRpc(data.defender_id, data.defender_username, data.id);
             }
             gameObject.SetActive(false);
+            yield break;
         }
 
         yield return new WaitForSeconds(5);

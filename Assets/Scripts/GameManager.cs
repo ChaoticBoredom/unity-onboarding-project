@@ -9,7 +9,6 @@ public class GameManager : NetworkBehaviour
 {
     public GameObject towerPrefab;
 
-    private GameObject m_SpawnPoint;
     private Spawner m_Spawner;
 
     public override void NetworkStart()
@@ -23,8 +22,7 @@ public class GameManager : NetworkBehaviour
             defenderHP.OnValueChanged += CheckDefenderGameEnd;
             attackerGold.OnValueChanged += CheckAttackerGameEnd;
 
-            m_SpawnPoint = GameObject.FindWithTag("Respawn");
-            m_Spawner = m_SpawnPoint.GetComponent<Spawner>();
+            m_Spawner = FindObjectOfType<Spawner>();
         }
     }
 

@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7132936100098814188}
+  - component: {fileID: 6783785602653596654}
   - component: {fileID: 4409369722256971383}
   - component: {fileID: 158885274733665706}
   - component: {fileID: 8961227400611533765}
   - component: {fileID: 4444357883543481056}
   - component: {fileID: -5988787944945541457}
-  - component: {fileID: 6783785602653596654}
   - component: {fileID: -6182880219452932652}
   m_Layer: 6
   m_Name: Creep
@@ -37,6 +37,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6783785602653596654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4128372424162850999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NetworkInstanceId: 0
+  PrefabHash: 14703840106383180096
+  PrefabHashGenerator: Creep
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
 --- !u!33 &4409369722256971383
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -133,23 +150,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &6783785602653596654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4128372424162850999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NetworkInstanceId: 0
-  PrefabHash: 14703840106383180096
-  PrefabHashGenerator: Creep
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
 --- !u!114 &-6182880219452932652
 MonoBehaviour:
   m_ObjectHideFlags: 0

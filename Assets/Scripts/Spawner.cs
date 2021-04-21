@@ -21,8 +21,7 @@ public class Spawner : NetworkBehaviour
             StartCoroutine(ContinuousSpawn());
     }
 
-    [ClientRpc]
-    public void SpawnCreepsClientRpc(int count = 1)
+    public void SpawnCreeps(int count = 1)
     {
         Debug.Log("Spawn Creeps!");
         StartCoroutine(SpawnOnDemand(count));

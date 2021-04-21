@@ -9,6 +9,9 @@ public class GameManager : NetworkBehaviour
 {
     public GameObject towerPrefab;
 
+    private GameObject m_SpawnPoint;
+    private Spawner m_Spawner;
+
     public override void NetworkStart()
     {
         if (NetworkManager.IsServer)
@@ -19,6 +22,9 @@ public class GameManager : NetworkBehaviour
 
             defenderHP.OnValueChanged += CheckDefenderGameEnd;
             attackerGold.OnValueChanged += CheckAttackerGameEnd;
+
+            m_SpawnPoint = GameObject.FindWithTag("Respawn");
+            m_Spawner = m_SpawnPoint.GetComponent<Spawner>();
         }
     }
 
@@ -92,6 +98,12 @@ public class GameManager : NetworkBehaviour
         defenderGold.Value -= towerCost;
         var newTower = Instantiate(towerPrefab, position, Quaternion.identity);
         newTower.GetComponent<NetworkObject>().Spawn();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnCreepsServerRpc(int spawnCount = 1)
+    {
+        m_Spawner.SpawnCreeps(spawnCount);
     }
 
     [ServerRpc]

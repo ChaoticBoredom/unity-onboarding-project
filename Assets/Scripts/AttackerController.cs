@@ -8,13 +8,11 @@ public class AttackerController : MonoBehaviour
 {
     public int spawnCount;
 
-    private GameObject m_SpawnPoint;
-    private Spawner m_Spawner;
+    private GameManager m_GameManager;
 
     public void Start()
     {
-        m_SpawnPoint = GameObject.FindWithTag("Respawn");
-        m_Spawner = m_SpawnPoint.GetComponent<Spawner>();
+        m_GameManager = FindObjectOfType<GameManager>();
     }
 
     public void UpdateSpawnCount(string count)
@@ -24,6 +22,6 @@ public class AttackerController : MonoBehaviour
 
     public void TriggerSpawn()
     {
-        m_Spawner.SpawnCreepsClientRpc(spawnCount);
+        m_GameManager.SpawnCreepsServerRpc(spawnCount);
     }
 }

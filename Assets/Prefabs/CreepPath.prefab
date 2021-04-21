@@ -179,7 +179,7 @@ MonoBehaviour:
   NetworkInstanceId: 0
   PrefabHash: 15589198230175896383
   PrefabHashGenerator: Spawner
-  AlwaysReplicateAsRoot: 0
+  AlwaysReplicateAsRoot: 1
   DontDestroyWithOwner: 0
 --- !u!114 &7513386009434717899
 MonoBehaviour:
@@ -293,7 +293,7 @@ MonoBehaviour:
   NetworkInstanceId: 0
   PrefabHash: 1893155116994794941
   PrefabHashGenerator: CreepPath
-  AlwaysReplicateAsRoot: 0
+  AlwaysReplicateAsRoot: 1
   DontDestroyWithOwner: 0
 --- !u!1 &7513386010273518816
 GameObject:

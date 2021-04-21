@@ -24,6 +24,6 @@ public class AttackerController : MonoBehaviour
 
     public void TriggerSpawn()
     {
-        m_Spawner.SpawnCreepsServerRpc(spawnCount);
+        m_Spawner.SpawnCreepsClientRpc(spawnCount);
     }
 }

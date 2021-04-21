@@ -23,6 +23,7 @@ public class Projectile : MonoBehaviour
 
         if (!target)
         {
+            GetComponent<NetworkObject>().Despawn();
             Destroy(gameObject);
             return;
         }

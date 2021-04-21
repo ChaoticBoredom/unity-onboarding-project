@@ -66,7 +66,6 @@ public class GameManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void BuildTowerServerRpc(Vector3 position)
     {
-        Debug.Log("Hi Tower!");
         position.y = 1;
         var newTower = Instantiate(towerPrefab, position, Quaternion.identity);
         newTower.GetComponent<NetworkObject>().Spawn();

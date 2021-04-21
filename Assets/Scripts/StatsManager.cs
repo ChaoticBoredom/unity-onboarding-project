@@ -24,8 +24,8 @@ public class StatsManager : MonoBehaviour
     public void FixedUpdate()
     {
         defenderGold.text = m_GameManager.defenderGold.Value.ToString();
-        //defenderHP.text = GameManager.Singleton.defenderHP.Value.ToString();
-        //attackerGold.text = GameManager.Singleton.attackerGold.Value.ToString();
+        defenderHP.text = m_GameManager.defenderHP.Value.ToString();
+        attackerGold.text = m_GameManager.attackerGold.Value.ToString();
     }
 
     public void UpdateDefenderName(string prevName, string newName)

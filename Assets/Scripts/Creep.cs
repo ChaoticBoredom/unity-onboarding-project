@@ -44,6 +44,8 @@ public class Creep : MonoBehaviour
 
     public void Hit(float incomingDamage)
     {
+        if (NetworkManager.Singleton.IsClient) return;
+
         m_CurrentHitPoints -= incomingDamage;
 
         if (m_CurrentHitPoints <= 0)

@@ -9,7 +9,6 @@ public class TowerBuilder : MonoBehaviour
     private Rigidbody m_Rigidbody;
     private Camera m_MainCamera;
     private GameManager m_GameManager;
-    private bool m_Dropping;
 
     void Start()
     {

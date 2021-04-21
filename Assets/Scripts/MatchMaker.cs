@@ -1,15 +1,13 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using MLAPI;
-using MLAPI.Messaging;
 using MLAPI.Transports.UNET;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class MatchMaker : NetworkBehaviour
+public class MatchMaker : MonoBehaviour
 {
     public string username;
     public GameObject defenderController;
@@ -18,6 +16,7 @@ public class MatchMaker : NetworkBehaviour
     private Text m_searchingText;
     private Button m_searchButton;
     private bool m_searching;
+    private GameManager m_GameManager;
 
     private const string URL_LOCATION = "https://26c3cb6d9270.ngrok.io";
 
@@ -39,6 +38,7 @@ public class MatchMaker : NetworkBehaviour
         m_searchingText = texts.Single(val => val.name == "Searching");
         m_searching = false;
         m_searchButton = GetComponentInChildren<Button>(true);
+        m_GameManager = FindObjectOfType<GameManager>();
     }
     
     public void SetUsername(string input)
@@ -82,20 +82,23 @@ public class MatchMaker : NetworkBehaviour
             MatchData data = JsonUtility.FromJson<MatchData>(webReq.downloadHandler.text);
             m_searching = false;
             m_searchingText.text = $"Match Found!\n{data.attacker_username}\nvs.\n{data.defender_username}";
+
             var serverData = data.server.Split(':');
             NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress = serverData.First();
-            NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectPort = Int32.Parse(serverData.Last());
+            NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectPort = int.Parse(serverData.Last());
             NetworkManager.Singleton.StartClient();
+
             if (data.attacker_username == username)
             {
+                m_GameManager.SetAttackerDataServerRpc(data.attacker_id, data.attacker_username, data.id);
                 Instantiate(attackerController);
-                //GameManager.Singleton.SetAttackerDataServerRpc(data.attacker_id, data.attacker_username, data.id);
             }
             else
             {
+                m_GameManager.SetDefenderDataServerRpc(data.defender_id, data.defender_username, data.id);
                 Instantiate(defenderController);
-                //GameManager.Singleton.SetDefenderDataServerRpc(data.defender_id, data.defender_username, data.id);
             }
+
             gameObject.SetActive(false);
             yield break;
         }

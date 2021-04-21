@@ -123,28 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &40919614 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7513386010186862966, guid: 942d4eea992e841aba780d972f4c45e6, type: 3}
-  m_PrefabInstance: {fileID: 1194854809}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &40919615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40919614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NetworkInstanceId: 0
-  PrefabHash: 1893155116994794941
-  PrefabHashGenerator: CreepPath
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
 --- !u!1 &157620578
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,6 +645,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerPrefab: {fileID: 1201946120218121767, guid: 46af9f11c905441dbb49572f41e444e5, type: 3}
+  defenderGold:
+    m_InternalValue: 0
+  defenderHP:
+    m_InternalValue: 0
+  attackerGold:
+    m_InternalValue: 0
+  defenderName:
+    m_InternalValue: 
+  defenderId:
+    m_InternalValue: 
+  attackerName:
+    m_InternalValue: 
+  attackerId:
+    m_InternalValue: 
+  matchId:
+    m_InternalValue: 
 --- !u!114 &1912857836
 MonoBehaviour:
   m_ObjectHideFlags: 0

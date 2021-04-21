@@ -8,6 +8,8 @@ public class Creep : MonoBehaviour
     public GameObject goal;
     public float speed;
     public float maxHitPoints;
+    public int damage;
+    public int gold;
     
     private float m_CurrentHitPoints;
     private Rigidbody m_Rigidbody;

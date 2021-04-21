@@ -16,7 +16,6 @@ public class Startup : MonoBehaviour
         NetworkManager.Singleton.GetComponent<UNetTransport>().ConnectAddress = serverData.First();
         NetworkManager.Singleton.GetComponent<UNetTransport>().ServerListenPort = int.Parse(serverData.Last());
         NetworkManager.Singleton.StartServer();
-        Debug.Log("Server Starting");
 #else
         Instantiate(matchmaker);
 #endif

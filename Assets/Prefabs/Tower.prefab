@@ -209,6 +209,7 @@ MonoBehaviour:
   range: 5.06
   fireRate: 0.2
   damage: 3
+  cost: 100
   projectilePrefab: {fileID: 1124760132132220929, guid: 2283ff4aabb3649a0b418b8d9aabb291, type: 3}
 --- !u!114 &17839160497442410
 MonoBehaviour:

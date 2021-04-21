@@ -16,6 +16,9 @@ public class GameManager : NetworkBehaviour
             defenderGold.Value = 200;
             defenderHP.Value = 200;
             attackerGold.Value = 5000;
+
+            defenderHP.OnValueChanged += CheckDefenderGameEnd;
+            attackerGold.OnValueChanged += CheckAttackerGameEnd;
         }
     }
 
@@ -63,10 +66,30 @@ public class GameManager : NetworkBehaviour
         ReadPermission = NetworkVariablePermission.Everyone
     });
 
+    public void CheckDefenderGameEnd(int prevValue, int newValue)
+    {
+        if (newValue <= 0)
+        {
+            Debug.Log("GAME OVER!");
+        }
+    }
+
+    public void CheckAttackerGameEnd(int prevValue, int newValue)
+    {
+        if (newValue <= 0)
+        {
+            Debug.Log("Game maybe over? Creeps in control");
+        }
+    }
+
     [ServerRpc(RequireOwnership = false)]
     public void BuildTowerServerRpc(Vector3 position)
     {
+        int towerCost = towerPrefab.GetComponent<Tower>().cost;
+        if (defenderGold.Value < towerCost) return;
+
         position.y = 1;
+        defenderGold.Value -= towerCost;
         var newTower = Instantiate(towerPrefab, position, Quaternion.identity);
         newTower.GetComponent<NetworkObject>().Spawn();
     }

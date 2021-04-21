@@ -11,9 +11,11 @@ public class Spawner : NetworkBehaviour
     public float spawnInterval;
 
     private Waypoint _waypoint;
+    private GameManager m_GameManager;
     
     public override void NetworkStart()
     {
+        m_GameManager = FindObjectOfType<GameManager>();
         _waypoint = GetComponent<Waypoint>();
         if (continuousSpawn)
             StartCoroutine(ContinuousSpawn());
@@ -36,11 +38,17 @@ public class Spawner : NetworkBehaviour
 
     void SpawnCreep()
     {
+        int creepCost = creep.GetComponent<Creep>().creepCost;
+        if (m_GameManager.attackerGold.Value < creepCost) return;
+        m_GameManager.attackerGold.Value -= creepCost;
+
         var position = transform.position;
         position.x = Random.Range(position.x - 0.5f, position.x + 0.5f);
         position.z = Random.Range(position.z - 0.5f, position.z + 0.5f);
         var newCreep = Instantiate(creep, position, Quaternion.identity);
-        newCreep.GetComponent<Creep>().goal = _waypoint.nextPoint;
+        var creepScript = newCreep.GetComponent<Creep>();
+        creepScript.goal = _waypoint.nextPoint;
+        creepScript.SetGameManager(m_GameManager);
         newCreep.GetComponent<NetworkObject>().Spawn();
     }
     

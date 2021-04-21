@@ -10,14 +10,17 @@ public class Creep : MonoBehaviour
     public float maxHitPoints;
     public int damage;
     public int gold;
+    public int creepCost;
     
     private float m_CurrentHitPoints;
     private Rigidbody m_Rigidbody;
+    private GameManager m_GameManager;
 
     void Start()
     {
         m_CurrentHitPoints = maxHitPoints;
         m_Rigidbody = GetComponent<Rigidbody>();
+        m_GameManager = FindObjectOfType<GameManager>();
     }
 
     void FixedUpdate()
@@ -36,10 +39,16 @@ public class Creep : MonoBehaviour
             goal = GetNextPoint();
             if (!goal)
             {
+                m_GameManager.defenderHP.Value -= damage;
                 GetComponent<NetworkObject>().Despawn();
                 Destroy(gameObject);
             }
         } 
+    }
+
+    public void SetGameManager(GameManager manager)
+    {
+        m_GameManager = manager;
     }
 
     public void Hit(float incomingDamage)
@@ -50,6 +59,7 @@ public class Creep : MonoBehaviour
 
         if (m_CurrentHitPoints <= 0)
         {
+            m_GameManager.defenderGold.Value += gold;
             GetComponent<NetworkObject>().Despawn();
             Destroy(gameObject);
         }

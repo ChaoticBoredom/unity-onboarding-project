@@ -8,7 +8,8 @@ public class Tower : MonoBehaviour
 
     public float range;
     public float fireRate;
-    public float damage;
+    public int damage;
+    public int cost;
     public GameObject projectilePrefab;
     
     private Collider[] m_Targets;
